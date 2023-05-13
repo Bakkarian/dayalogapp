@@ -15,9 +15,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
   provider: ^6.0.5
-  shared_preferences: ^2.1.0
+  shared_preferences: ^2.1.1
   get: ^4.6.5
   google_maps_widget: ^1.0.5+1
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
