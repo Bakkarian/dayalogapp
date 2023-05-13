@@ -532,7 +532,19 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                       onPressed: (){
                         Get.to(MapTracker());
                       },
-                      style: primaryButton,
+                      style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                          ),
+                          disabledBackgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).buttonColor.withOpacity(0.7),
+                          disabledForegroundColor: Colors.white.withOpacity(0.5),
+                          backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).buttonColor,
+                          foregroundColor: white,
+                          textStyle: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.bold
+                          )
+                      ),
                       child: Text(
                         "View on Map"
                       ),
