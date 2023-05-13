@@ -113,7 +113,7 @@ final ButtonStyle primaryButton = TextButton.styleFrom(
     ),
     // disabledBackgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, context).buttonColor,
     // disabledForegroundColor: grey,
-    backgroundColor: primaryColor,
+    backgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, Get.context!).buttonColor,
     foregroundColor: white,
     textStyle: TextStyle(
         color: white,
@@ -129,7 +129,8 @@ final ButtonStyle accentButton = TextButton.styleFrom(
     backgroundColor: accentColor,
     foregroundColor: white,
     textStyle: TextStyle(
-        color: white
+        color: white,
+        fontWeight: FontWeight.bold
     )
 );
 
