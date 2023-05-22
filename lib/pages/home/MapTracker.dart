@@ -84,7 +84,7 @@ class _MapTrackerState extends State<MapTracker> {
       ),
       body: loading?SizedBox():
       GoogleMapsWidget(
-        apiKey: "AIzaSyDcWnFHx3aRBy_3oEeDMydOLGECc0MNYjk",
+        apiKey: _mainController.apiKey,
         key: mapsWidgetController,
         onMapCreated: (GoogleMapController controller){
           mapController = controller;
