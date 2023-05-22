@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/pages/TripDetails/TripDetails.dart';
 import 'package:dayalog/pages/home/MapTracker.dart';
+import 'package:dayalog/pages/viewLocation/ViewLocation.dart';
 import 'package:dayalog/styles/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -445,10 +446,19 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                                   )
                                 ],
                               ),
-                              Text(
-                                "0.323454, 13.5674",
-                                style: TextStyle(
-                                  color: CupertinoColors.activeBlue
+                              InkWell(
+                                onTap: (){
+                                  var location = {
+                                    "lat": 0.359010,
+                                    "lng": 32.598120
+                                  };
+                                  Get.to(ViewLocation(position: location,));
+                                },
+                                child: Text(
+                                  "0.359010, 32.598120",
+                                  style: TextStyle(
+                                    color: CupertinoColors.activeBlue
+                                  ),
                                 ),
                               )
                             ],
