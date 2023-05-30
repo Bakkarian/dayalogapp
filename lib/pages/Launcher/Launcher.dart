@@ -52,8 +52,8 @@ class _LauncherState extends State<Launcher> {
         setState(() {
           _mainController.userString.value = prefs.getString("user")!;
         });
-        Get.offAll(const MainPage());
-
+        // Get.offAll(const MainPage());
+        _mainController.initUniLinks();
     }else{
       Get.offAll(const Login());
     }

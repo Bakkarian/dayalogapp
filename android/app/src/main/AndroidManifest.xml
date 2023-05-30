@@ -37,8 +37,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
-                    android:scheme="dayalog"
-                    android:host="track_order" />
+                    android:scheme="daya"
+                    android:host="dayalog" />
             </intent-filter>
 
             <!-- App Links -->

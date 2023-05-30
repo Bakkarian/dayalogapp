@@ -1,9 +1,12 @@
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:dayalog/modals/OrdersModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:uni_links/uni_links.dart';
 
 import '../modals/DarkThemeProvider.dart';
 import '../services/CRUD.dart';
@@ -48,6 +51,53 @@ class mainController extends GetxController{
       }
     } finally {
       isOrdersLoading(false);
+    }
+  }
+
+
+  late StreamSubscription _sub;
+  Future<void> initUniLinks() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      final initialLink = await getInitialLink();
+      // Parse the link and warn the user, if it is not correct,
+      // but keep in mind it could be `null`.\
+      if(initialLink==null){
+        Get.offAllNamed("/mainPage");
+      }else{
+        handleLinks(initialLink);
+      }
+      // Attach a listener to the stream
+      _sub = linkStream.listen((String? link) {
+        // Parse the link and warn the user, if it is not correct
+        print("INNN: $link");
+        if(link==null){
+          Get.offAllNamed("/mainPage");
+        }else{
+          handleLinks(link);
+        }
+      }, onError: (err) {
+        // Handle exception by warning the user their action did not succeed
+      });
+    } on PlatformException {
+      // Handle exception by warning the user their action did not succeed
+      // return?
+    }
+
+  }
+
+  handleLinks(link){
+    var initUri = Uri.parse(link);
+    print("INNNN: ${initUri.path}");
+    var path = initUri.path;
+    Get.offAllNamed("/mainPage");
+    if(path!=""||path!="/"){
+      if(path=="/create_order"){
+        Get.toNamed("/sendOrder");
+      }
+      if(path=="/view_order"){
+        Get.toNamed("/viewOrders");
+      }
     }
   }
 
