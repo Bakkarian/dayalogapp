@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dayalog/authentications/Login.dart';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert' as convert;
 
 import '../styles/colors.dart';
@@ -110,10 +113,10 @@ class _SideMenuState extends State<SideMenu> {
                 focusColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).focusColor,
                 title: Row(
                   children: [
-                    Icon(Icons.account_balance_wallet_rounded,
+                    Icon(Icons.shopping_basket,
                       color: Colors.grey[600],),
                     SizedBox(width: 10,),
-                    Text('Login Page',
+                    Text('Create Order',
                       style: TextStyle(
                           color: Colors.grey[600],
                           fontWeight: FontWeight.normal,
@@ -124,7 +127,69 @@ class _SideMenuState extends State<SideMenu> {
                 onTap: () async{
                   if(MediaQuery.of(context).size.width < 600){
                     Navigator.pop(context);
-                    Get.to(Login());
+                  }
+                  final Uri _url = Uri.parse('pat://patasente.me/create_order');
+                  try {
+                    var launch = await launchUrl(_url);
+                    if (!launch) {
+                      throw Exception('Could not launch $_url');
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Patasente not installed")));
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      final appId = Platform.isAndroid ? 'com.patasente.e' : '1553761945';
+                      final url = Uri.parse(
+                        Platform.isAndroid
+                            ? "market://details?id=$appId"
+                            : "https://apps.apple.com/app/id$appId",
+                      );
+                      launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    }
+                  }
+                },
+              ),
+              ListTile(
+                focusColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).focusColor,
+                title: Row(
+                  children: [
+                    Icon(Icons.remove_red_eye,
+                      color: Colors.grey[600],),
+                    SizedBox(width: 10,),
+                    Text('View Orders',
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16
+                      ),)
+                  ],
+                ),
+                onTap: () async{
+                  if(MediaQuery.of(context).size.width < 600){
+                    Navigator.pop(context);
+                  }
+                  final Uri _url = Uri.parse('pat://patasente.me/view_order');
+                  try {
+                    var launch = await launchUrl(_url);
+                    if (!launch) {
+                      throw Exception('Could not launch $_url');
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Patasente not installed")));
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      final appId = Platform.isAndroid ? 'com.patasente.e' : '1553761945';
+                      final url = Uri.parse(
+                        Platform.isAndroid
+                            ? "market://details?id=$appId"
+                            : "https://apps.apple.com/app/id$appId",
+                      );
+                      launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    }
                   }
                 },
               ),
