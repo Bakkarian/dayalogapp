@@ -1,6 +1,10 @@
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../modals/OrdersModel.dart';
 
 
 String patasente_base_url = "https://patasente.me";
@@ -38,4 +42,29 @@ class userManagement{
     );
     return response.body;
   }
+}
+
+class dataManagement{
+
+  //GET ORDERS
+  static Future<List<OrdersModel>?> getOrdersNew() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = jsonDecode(prefs.getString("user")!)["token"];
+    // print(token);
+    var response = await http.get(
+      Uri.parse(Uri.encodeFull("$patasente_base_url/phantom-api/get-all-my-purchase-order/order?take=100")),
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer $token"
+      },
+    );
+    if(response.statusCode == 200){
+      var dataString = response.body;
+      return orderFromJson(dataString);
+    }else{
+      return null;
+    }
+  }
+
 }

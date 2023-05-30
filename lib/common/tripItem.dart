@@ -11,8 +11,8 @@ import '../styles/styles.dart';
 
 class tripItem extends StatefulWidget {
   bool detailedView;
-  String? tag;
-   tripItem({required this.detailedView, this.tag});
+  String? tag,delivery;
+   tripItem({required this.detailedView, this.tag, this.delivery});
 
   @override
   State<tripItem> createState() => _tripItemState(detailedView: detailedView,);
@@ -83,7 +83,7 @@ class _tripItemState extends State<tripItem> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Pickup Point",
+                                    "Pickup Point - ${widget.delivery}",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
