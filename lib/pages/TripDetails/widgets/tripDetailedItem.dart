@@ -221,27 +221,31 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 5,),
+                            // SizedBox(height: 5,),
+                            Text(
+                              "Pickup Point.",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[400]
+                              ),
+                            ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(
-                                  "Isongiro",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(
-                                  "Pickup Point.",
-                                ),
                                 Expanded(
                                   child: Text(
-                                    "8:30am",
-                                    textAlign: TextAlign.right,
+                                    "Isongiro",
                                     style: TextStyle(
-                                      color: Colors.grey[600]
+                                        fontWeight: FontWeight.bold
                                     ),
+                                  ),
+                                ),
+                                Text(
+                                  "8:30am",
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: Colors.grey[600]
                                   ),
                                 )
                               ],
@@ -501,12 +505,19 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 5,),
+                            SizedBox(height: 10,),
+                            Text(
+                              "Final Delivery Point.",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[400]
+                              ),
+                            ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  width: 150,
+                                Expanded(
                                   child: Text(
                                     "Kampala, Kikuubo, Kikuubo road",
                                     style: TextStyle(
@@ -514,17 +525,11 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 5,),
                                 Text(
-                                  "Final Delivery Point.",
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    ".",
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                        color: Colors.grey[600]
-                                    ),
+                                  ".",
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      color: Colors.grey[600]
                                   ),
                                 )
                               ],

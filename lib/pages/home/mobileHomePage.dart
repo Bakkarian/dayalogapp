@@ -57,11 +57,12 @@ class _mobileHomePageState extends State<mobileHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            /*Obx(() =>
             !_mainController.isOrdersLoading.value?
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white
+                  color: Colors.white
               ),
               child: Container(
                 width: double.infinity,
@@ -90,15 +91,15 @@ class _mobileHomePageState extends State<mobileHomePage> {
                           Text(
                             "Track your shipment",
                             style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
                           SizedBox(height: 10,),
                           Text(
                             "Track your most recent \nshipments here",
                             style: TextStyle(
-                                fontSize: 18,
+                              fontSize: 18,
                             ),
                           ),
                           SizedBox(height: 20,),
@@ -134,7 +135,8 @@ class _mobileHomePageState extends State<mobileHomePage> {
                 ),
               ),
             ):
-            SizedBox(),
+            SizedBox()
+            ),*/
             SizedBox(height: 20,),
             /*ListView.builder(
               itemCount: 10,
