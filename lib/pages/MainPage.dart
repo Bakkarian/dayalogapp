@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return ResponsiveLayout(
         desktopPage: desktopPage(page: const desktopHomePage(),),
-        tabletPage: tabletPage(page: const tabletHomePage(),),
+        tabletPage: tabletPage(page: const mobileHomePage(),),
         mobilePage: mobilePage(page: const mobileHomePage(),));
   }
 }

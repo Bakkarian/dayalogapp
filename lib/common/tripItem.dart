@@ -181,27 +181,58 @@ class _tripItemState extends State<tripItem> {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Ivan Driver",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: Text(
+                                "Ivan Driver",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
+                            /*Container(
+                              padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
+                              decoration: BoxDecoration(
+                                  color: orange,
+                                  borderRadius: BorderRadius.circular(12)
+                              ),
+                              child: Text(
+                                "Pending Delivery",
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),*/
                             Container(
                               padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
                               decoration: BoxDecoration(
-                                  color: green.withOpacity(0.1),
+                                  color: grey,
+                                  borderRadius: BorderRadius.circular(12)
+                              ),
+                              child: Text(
+                                "Delivered",
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            /*
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
+                              decoration: BoxDecoration(
+                                  color: green,
                                   borderRadius: BorderRadius.circular(12)
                               ),
                               child: Text(
                                 "on Trip",
                                 style: TextStyle(
-                                  color: green,
+                                  color: white,
                                   fontSize: 14,
                                 ),
                               ),
-                            )
+                            ),*/
                           ],
                         ),
                         Text(

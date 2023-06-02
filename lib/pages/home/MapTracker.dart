@@ -23,6 +23,7 @@ class _MapTrackerState extends State<MapTracker> {
   final mapsWidgetController = GlobalKey<GoogleMapsWidgetState>();
   var positions = [];
   var loading = true;
+  var mapLoading = true;
   final List<LatLng> polylineCoordinates = [];
   final Set<Polyline> _polylines = HashSet<Polyline>();
   late GoogleMapController mapController;
@@ -68,8 +69,18 @@ class _MapTrackerState extends State<MapTracker> {
     return Scaffold(
       backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
       appBar: AppBar(
-        title: Text(
-          "Tracking"
+        title: Row(
+          children: [
+            Text(
+              "Tracking"
+            ),
+            SizedBox(width: 10,),
+            loading || mapLoading?SizedBox(
+                width: 12,
+                height: 12,
+                child: Loader()
+            ):SizedBox()
+          ],
         ),
 
         leading: IconButton(
@@ -89,6 +100,9 @@ class _MapTrackerState extends State<MapTracker> {
         onMapCreated: (GoogleMapController controller){
           mapController = controller;
           mapController.setMapStyle(_mapStyle);
+          setState(() {
+            mapLoading = false;
+          });
         },
         sourceLatLng: LatLng(
           positions[0]["latitude"], positions[0]["longitude"],
