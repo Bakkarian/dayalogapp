@@ -551,9 +551,9 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(15.0),
                           ),
-                          disabledBackgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).buttonColor.withOpacity(0.7),
+                          disabledBackgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).primaryColor.withOpacity(0.7),
                           disabledForegroundColor: Colors.white.withOpacity(0.5),
-                          backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).buttonColor,
+                          backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).primaryColor,
                           foregroundColor: white,
                           textStyle: TextStyle(
                               color: white,

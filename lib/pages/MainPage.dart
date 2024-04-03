@@ -1,3 +1,4 @@
+import 'package:dayalog/pages/QRcode/QRhome.dart';
 import 'package:dayalog/pages/home/desktopHomePage.dart';
 import 'package:dayalog/pages/home/mobileHomePage.dart';
 import 'package:dayalog/pages/home/tabletHomePage.dart';
@@ -21,7 +22,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return ResponsiveLayout(
         desktopPage: desktopPage(page: const desktopHomePage(),),
-        tabletPage: tabletPage(page: const mobileHomePage(),),
-        mobilePage: mobilePage(page: const mobileHomePage(),));
+        tabletPage: tabletPage(page: const QRhome(),),
+        mobilePage: mobilePage(page: const QRhome(),));
   }
 }

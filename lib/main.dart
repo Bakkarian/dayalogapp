@@ -1,15 +1,21 @@
 import 'package:dayalog/authentications/Login.dart';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/pages/MainPage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'modals/DarkThemeProvider.dart';
 import 'pages/Launcher/Launcher.dart';
 import 'styles/styles.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

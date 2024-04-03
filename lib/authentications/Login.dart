@@ -137,17 +137,17 @@ class _LoginState extends State<Login> {
                       _login();
                     }:null,
                     style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                        ),
-                        disabledBackgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).buttonColor.withOpacity(0.7),
-                        disabledForegroundColor: Colors.white.withOpacity(0.5),
-                        backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).buttonColor,
-                        foregroundColor: white,
-                        textStyle: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold
-                        )
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(15.0),
+                      ),
+                      disabledBackgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).primaryColor.withOpacity(0.7),
+                      disabledForegroundColor: Colors.white.withOpacity(0.5),
+                      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).primaryColor,
+                      foregroundColor: white,
+                      textStyle: TextStyle(
+                          color: white,
+                          fontWeight: FontWeight.bold
+                      ),
                     ),
                     child: Text(
                         "Login"
@@ -164,10 +164,7 @@ class _LoginState extends State<Login> {
                     },
                     style: OutlinedButton.styleFrom(
                       // primary: Colors.black87,
-                      primary: _mainController.themeChangeProvider.darkTheme?white:accentColor,
-                      // minimumSize: Size(88, 36),
-                      // padding: EdgeInsets.symmetric(horizontal: 16),
-                      shape: const RoundedRectangleBorder(
+                      foregroundColor: _mainController.themeChangeProvider.darkTheme?white:accentColor, shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                     ).copyWith(
@@ -175,7 +172,7 @@ class _LoginState extends State<Login> {
                             (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
                             return BorderSide(
-                              color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).buttonColor,
+                              color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, Get.context!).primaryColor,
                               width: 1,
                             );
                           }else{

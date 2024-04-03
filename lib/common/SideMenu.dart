@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert' as convert;
 
+import '../pages/Launcher/Launcher.dart';
 import '../styles/colors.dart';
 class SideMenu extends StatefulWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _SideMenuState extends State<SideMenu> {
                       fontWeight: FontWeight.bold
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Container(
                   width: double.infinity,
                   // height: 50,
@@ -77,6 +78,7 @@ class _SideMenuState extends State<SideMenu> {
                             // This is called when the user toggles the switch.
                             // setState(() {
                             _mainController.themeChangeProvider.darkTheme = value;
+                            Get.offAll(Launcher());
                             // });
                           },
                         ),

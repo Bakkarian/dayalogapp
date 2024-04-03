@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377016718616",
+    "project_id": "dayalog-33e67",
+    "storage_bucket": "dayalog-33e67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377016718616:android:719313f55df0620f9bba6d",
+        "android_client_info": {
+          "package_name": "co.dayalog.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOsKRNhWWz9I_MoZQfaU93fuDW3FrBjX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

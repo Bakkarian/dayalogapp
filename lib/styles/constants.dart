@@ -18,7 +18,7 @@ var isDarkMode = _controller.themeChangeProvider.darkTheme;
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   // onPrimary: white,
-  primary: primaryColor,
+  backgroundColor: primaryColor,
   textStyle: TextStyle(
     color: white
   ),
@@ -31,10 +31,7 @@ final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
 
 final ButtonStyle primaryOutlineButtonStyle = OutlinedButton.styleFrom(
   // primary: Colors.black87,
-  primary: primaryColor,
-  // minimumSize: Size(88, 36),
-  // padding: EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
+  foregroundColor: primaryColor, shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
   ),
 ).copyWith(
@@ -57,10 +54,7 @@ final ButtonStyle primaryOutlineButtonStyle = OutlinedButton.styleFrom(
 
 final ButtonStyle accentOutlineButtonStyle = OutlinedButton.styleFrom(
   // primary: Colors.black87,
-  primary: accentColor,
-  // minimumSize: Size(88, 36),
-  // padding: EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
+  foregroundColor: accentColor, shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
   ),
 ).copyWith(
@@ -83,10 +77,7 @@ final ButtonStyle accentOutlineButtonStyle = OutlinedButton.styleFrom(
 
 final ButtonStyle whiteOutlineButtonStyle = OutlinedButton.styleFrom(
   // primary: Colors.black87,
-  primary: white,
-  // minimumSize: Size(88, 36),
-  // padding: EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
+  foregroundColor: white, shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
   ),
 ).copyWith(
@@ -113,7 +104,7 @@ final ButtonStyle primaryButton = TextButton.styleFrom(
     ),
     // disabledBackgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, context).buttonColor,
     // disabledForegroundColor: grey,
-    backgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, Get.context!).buttonColor,
+    backgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, Get.context!).primaryColor,
     foregroundColor: white,
     textStyle: TextStyle(
         color: white,

@@ -9,12 +9,12 @@ class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
       // primarySwatch: Colors.red,
-      primaryColor: isDarkTheme ? Colors.black : Colors.white,
+      primaryColor: isDarkTheme ? Colors.black : primaryColor,
 
       backgroundColor: isDarkTheme ? Colors.black : Color(0xffF4F4F4),
 
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
-      buttonColor: isDarkTheme ? Color(0xff3B3B3B) : primaryColor,
+      // buttonColor: isDarkTheme ? Color(0xff3B3B3B) : primaryColor,
       shadowColor: isDarkTheme ? Colors.black : Colors.grey[200],
 
       hintColor: isDarkTheme ? Color(0xff280C0B) : Color(0xffEECED3),
@@ -27,9 +27,18 @@ class Styles {
       cardColor: isDarkTheme ? Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      buttonTheme: Theme.of(context).buttonTheme.copyWith(
-          colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light(),
-      ),
+        buttonTheme: ButtonThemeData(
+            buttonColor: isDarkTheme ? Color(0xff3B3B3B) : primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15.0),
+            ),
+            textTheme: ButtonTextTheme.accent
+        ),
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+
+            )
+        ),
       appBarTheme: AppBarTheme(
         elevation: 0.0,
         color: isDarkTheme ? Colors.black : Color(0XffFFFFFF),

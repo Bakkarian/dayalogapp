@@ -14,7 +14,7 @@ import '../styles/styles.dart';
 
 class mainController extends GetxController{
 
-  var apiKey = "AIzaSyDcWnFHx3aRBy_3oEeDMydOLGECc0MNYjk";
+  var apiKey = "AIzaSyAir29_hRhb99ll83YjLarlSbj-9su5zXI";
   var ordersList = <OrdersModel>[].obs;
   var isOrdersLoading = true.obs;
 
@@ -39,6 +39,10 @@ class mainController extends GetxController{
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
     await themeChangeProvider.darkThemePreference.getTheme();
+  }
+  void setCurrentAppTheme() async {
+    await themeChangeProvider.darkThemePreference.setDarkTheme(true);
+    getCurrentAppTheme();
   }
 
   //GET ORDERS
