@@ -37,7 +37,7 @@ class _mobileHomePageState extends State<mobileHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _key,
-      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+      // backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(

@@ -20,7 +20,7 @@ class _TripDetailsState extends State<TripDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+      // backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(

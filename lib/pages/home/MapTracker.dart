@@ -67,7 +67,7 @@ class _MapTrackerState extends State<MapTracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+      // backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
       appBar: AppBar(
         title: Row(
           children: [

@@ -178,7 +178,7 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
             height: animation.value,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+              color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
               // borderRadius: BorderRadius.circular(10)
             ),
             padding: EdgeInsets.all(20),
@@ -586,7 +586,7 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+                      color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
                       borderRadius: BorderRadius.circular(10)
                   ),
                 ),

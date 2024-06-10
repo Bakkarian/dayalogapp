@@ -150,7 +150,7 @@ class _tripItemState extends State<tripItem> {
               detailedView?Container(
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+                  color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
                   borderRadius: BorderRadius.circular(10)
                 ),
               ):SizedBox(),
@@ -168,7 +168,7 @@ class _tripItemState extends State<tripItem> {
                     width: 50,
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+                        color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
                         borderRadius: BorderRadius.circular(10)
                     ),
                   ),

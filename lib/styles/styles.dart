@@ -11,7 +11,18 @@ class Styles {
       // primarySwatch: Colors.red,
       primaryColor: isDarkTheme ? Colors.black : primaryColor,
 
-      backgroundColor: isDarkTheme ? Colors.black : Color(0xffF4F4F4),
+      // backgroundColor: isDarkTheme ? Colors.black : Color(0xffF4F4F4),
+        colorScheme: ColorScheme(
+          primary: isDarkTheme ? Color(0xFF151515) : primaryColor,
+          brightness: isDarkTheme ? Brightness.dark : Brightness.light,
+          onPrimary: isDarkTheme ? Color(0xFF151515) : veryVeryLightGrey,
+          secondary: isDarkTheme ? primaryColor : accentColor,
+          onSecondary: isDarkTheme ? primaryColor : accentColor,
+          error: red,
+          onError: red,
+          surface: primaryColor.withOpacity(0.5),
+          onSurface: primaryColor.withOpacity(0.5),
+        ),
 
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
       // buttonColor: isDarkTheme ? Color(0xff3B3B3B) : primaryColor,

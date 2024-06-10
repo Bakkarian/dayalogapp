@@ -19,7 +19,7 @@ class _desktopHomePageState extends State<desktopHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -159,7 +159,7 @@ class _desktopHomePageState extends State<desktopHomePage> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+                            color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
                             borderRadius: BorderRadius.circular(10)
                         ),
                       ),

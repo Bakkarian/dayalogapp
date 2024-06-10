@@ -159,7 +159,7 @@ class _tabletHomePageState extends State<tabletHomePage> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+                            color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
                             borderRadius: BorderRadius.circular(10)
                         ),
                       ),

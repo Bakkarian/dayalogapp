@@ -155,7 +155,7 @@ class _ViewLocationState extends State<ViewLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).backgroundColor,
+      backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
       appBar: AppBar(
         title: Text(
             "View Location"
