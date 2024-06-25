@@ -3,17 +3,22 @@ import 'dart:math';
 
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:dayalog/controllers/mainController.dart';
+import 'package:dayalog/pages/TripDetails/TrackingSettings.dart';
+import 'package:dayalog/pages/home/MapTracker.dart';
+import 'package:dayalog/styles/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_widget/google_maps_widget.dart';
+import 'package:heroicons/heroicons.dart';
 
 import '../../styles/colors.dart';
 import '../../styles/styles.dart';
 
 class ViewLocation extends StatefulWidget {
-  var position;
-  ViewLocation({Key? key, required this.position}) : super(key: key);
+  var data;
+  var index;
+  ViewLocation({Key? key, this.data, this.index}) : super(key: key);
 
   @override
   State<ViewLocation> createState() => _ViewLocationState();
@@ -31,6 +36,7 @@ class _ViewLocationState extends State<ViewLocation> {
   Completer<GoogleMapController>();
 
   CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  List<LatLng> routeCoordinates = [];
 
   static const CameraPosition _initialLocation = CameraPosition(
     target: LatLng(0.3502223710191752, 32.59810888252596),
@@ -49,15 +55,15 @@ class _ViewLocationState extends State<ViewLocation> {
   final Set<Marker> markers = new Set();
 
   // creating a new MARKER
+  String imgurl = "assets/images/car.png";
+  String imgurl2 = "assets/images/dot.png";
   addMarker()async{
     var markerIdVal = _mainController.getRandomString(10);
     final MarkerId markerId = MarkerId(markerIdVal);
-    var showLocation = LatLng(widget.position["lat"], widget.position["lng"]);
-    String imgurl = "https://www.fluttercampus.com/img/car.png";
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl))
-        .load(imgurl))
-        .buffer
-        .asUint8List();
+    var showLocation = LatLng(_mainController.devices[widget.index]["lastPosition"]["latitude"] ?? 0.0, _mainController.devices[widget.index]["lastPosition"]["longitude"] ?? 0.0);
+
+    ByteData bytesDats = await rootBundle.load(imgurl);
+    Uint8List bytes = bytesDats.buffer.asUint8List();
 
     setState(() {
       markers.add(Marker( //add first marker
@@ -70,65 +76,162 @@ class _ViewLocationState extends State<ViewLocation> {
         ),*/
         // icon: BitmapDescriptor.defaultMarker, //Icon for Marker
         onTap: (){
-          _customInfoWindowController.addInfoWindow!(
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(4),
+          addInfoWindow(showLocation);
+        },
+      ));
+    });
+    updateMarker(markerId);
+  }
+
+  addInfoWindow(showLocation){
+    _customInfoWindowController.addInfoWindow!(
+      Container(
+        color: white,
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                width: double.infinity,
+                // height: double.infinity,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                            color: _mainController.devices[widget.index]["status"]=="online"?Colors.lightGreen:orange
+                        ),
+                      ),
                     ),
-                    width: double.infinity,
-                    // height: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              width: 25,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                color: Colors.lightGreen
-                              ),
+                          Text(
+                            "${_mainController.devices[widget.index]["name"]}",
+                            style: TextStyle(
+                                color: grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12
                             ),
                           ),
-                          SizedBox(
-                            width: 8.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              Text(
-                                "Ivan Driver",
-                                style: TextStyle(
-                                    color: grey,
-                                  fontWeight: FontWeight.bold
-                                ),
+                              HeroIcon(
+                                HeroIcons.wifi,
+                                size: 13,
+                                style: HeroIconStyle.solid,
+                                color: _mainController.devices[widget.index]["status"]=="online"?green:orange,
                               ),
                               Text(
-                                "ID: 3454343",
+                                "${_mainController.devices[widget.index]["status"]}",
                                 style: TextStyle(
-                                    color: grey,
-                                  fontSize: 12
+                                    color: _mainController.devices[widget.index]["status"]=="online"?green:orange,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  height: 30,
+                  child: OutlinedButton(
+                    onPressed: (){
+                      Get.to(MapTracker(deviceId: _mainController.devices[widget.index]["id"],));
+                    },
+                    child: const Text('Details'),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: OutlinedButton(
+                    style: accentOutlineButtonStyle,
+                    onPressed: (){
+                      print("ID:: ${_mainController.devices[widget.index]["id"]}");
+                      Get.to(
+                          TrackingSettings(
+                            deviceId: _mainController.devices[widget.index]["id"],
+                            deviceName: _mainController.devices[widget.index]["name"],
+                          )
+                      );
+                    },
+                    child: const Text('Track'),
                   ),
                 ),
               ],
-            ),
-            showLocation,
-          );
-        }
-      ));
+            )
+          ],
+        ),
+      ),
+      showLocation,
+    );
+  }
+
+  late Timer _timer;
+  updateMarker(MarkerId markerId) async{
+    var _mapController = _customInfoWindowController.googleMapController;
+
+
+    var _currentPosition = LatLng(_mainController.devices[widget.index]["lastPosition"]["latitude"],_mainController.devices[widget.index]["lastPosition"]["longitude"]);
+    // final MarkerId markerId = MarkerId('current_marker');
+
+    // Remove the old marker
+    setState(() {
+      markers.removeWhere((marker) => marker.markerId == markerId);
+    });
+
+    // Add the new marker with the updated position
+    ByteData bytesDats = await rootBundle.load(imgurl);
+    Uint8List bytes = bytesDats.buffer.asUint8List();
+    //dot Image
+    ByteData bytesData = await rootBundle.load(imgurl2);
+    Uint8List bytes2 = bytesData.buffer.asUint8List();
+    // _addMarker(_currentPosition);
+    /*markers.add(Marker( //add first marker
+      markerId: MarkerId(_mainController.getRandomString(10)),
+      position: _currentPosition, //position of marker
+      icon: BitmapDescriptor.fromBytes(bytes2),
+      onTap: (){
+        // addInfoWindow(_currentPosition);
+      },
+    ));*/
+    markers.add(Marker( //add first marker
+      markerId: markerId,
+      position: _currentPosition, //position of marker
+      icon: BitmapDescriptor.fromBytes(bytes),
+      onTap: (){
+        addInfoWindow(_currentPosition);
+      },
+    ));
+
+    setState(() {
+      _timer = new Timer.periodic(const Duration(seconds: 5), (timer){
+        updateMarker(markerId);
+        _timer.cancel();
+      });
+
+      routeCoordinates.add(_currentPosition);
     });
   }
 
@@ -139,7 +242,7 @@ class _ViewLocationState extends State<ViewLocation> {
     setState(() {
       _positionToLoad = CameraPosition(
           bearing: 192.8334901395799,
-          target: LatLng(widget.position["lat"], widget.position["lng"]),
+          target: LatLng(_mainController.devices[widget.index]["lastPosition"]["latitude"] ?? 0.0, _mainController.devices[widget.index]["lastPosition"]["longitude"] ?? 0.0),
           // tilt: 59.440717697143555,
           zoom: 15.0,
       );
@@ -153,14 +256,21 @@ class _ViewLocationState extends State<ViewLocation> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _timer.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).canvasColor,
       appBar: AppBar(
         title: Text(
-            "View Location"
+            "Location: ${_mainController.devices[widget.index]["name"]}"
         ),
-        leading: IconButton(
+        /*leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
             color: Colors.grey[500],
@@ -168,7 +278,7 @@ class _ViewLocationState extends State<ViewLocation> {
           onPressed: () {
             Get.back();
           },
-        ),
+        ),*/
       ),
       body: Stack(
         children: [
@@ -189,11 +299,20 @@ class _ViewLocationState extends State<ViewLocation> {
             onCameraMove: (position) {
               _customInfoWindowController.onCameraMove!();
             },
+            polylines: {
+              Polyline(
+                polylineId: PolylineId('route'),
+                points: routeCoordinates, // List<LatLng> of your route's coordinates
+                color: primaryColor,
+                width: 3,
+                zIndex: 1000
+              ),
+            },
           ),
           CustomInfoWindow(
             controller: _customInfoWindowController,
-            height: 75,
-            width: 150,
+            height: 100,
+            width: 250,
             offset: 50,
           )
         ],

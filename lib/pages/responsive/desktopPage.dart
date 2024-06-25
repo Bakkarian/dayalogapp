@@ -34,7 +34,7 @@ class desktopPage extends StatelessWidget {
                   width: double.infinity,
                   height: double.infinity,
                   color: Styles.themeData(_mainController.themeChangeProvider.darkTheme, context).shadowColor,
-                  child: MapTracker(),
+                  child: MapTracker( deviceId: 0,),
                 ),
                 Container(
                   width: 400,

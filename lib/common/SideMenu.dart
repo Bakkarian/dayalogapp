@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dayalog/authentications/Login.dart';
+import 'package:dayalog/pages/Login.dart';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/styles/styles.dart';
 import 'package:flutter/material.dart';

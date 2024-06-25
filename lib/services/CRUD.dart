@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayalog/controllers/mainController.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,17 +12,21 @@ import '../modals/OrdersModel.dart';
 
 
 String patasente_base_url = "https://patasente.me";
+String base_url = "https://dayalog.co";
 var db = FirebaseFirestore.instance;
+mainController _mainController = Get.find();
+
 class userManagement{
 
   //LOGIN
   Future<String> login(username,password) async{
     Map body = {
-      'username': username,
-      'password': password
+      'user_id': username,
+      'password': password,
+      'token_name': "${_mainController.getRandomString(24)}",
     };
     var response = await http.post(
-        Uri.parse("$patasente_base_url/phantom-api/login"),
+        Uri.parse("$base_url/api/tokens/create"),
         headers: {
           // "Accept": "application/json",
           //  'Content-Type': 'application/json; charset=UTF-8',
@@ -69,6 +74,38 @@ class dataManagement{
     }else{
       return null;
     }
+  }
+
+  getDevices() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token")!;
+    // print(token);
+    var response = await http.get(
+      Uri.parse(Uri.encodeFull("$base_url/api/devices")),
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer $token"
+      },
+    );
+
+    return response.body;
+  }
+
+  getDeviceLocations(deviceId, startDate, endDate) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token")!;
+    print("deviceId::: $deviceId");
+    var response = await http.get(
+      Uri.parse(Uri.encodeFull("$base_url/api/devices/$deviceId/positions?from=$startDate&to=$endDate")),
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer $token"
+      },
+    );
+
+    return response.body;
   }
 
   configureQR(code,serial) async{
@@ -126,4 +163,6 @@ class dataManagement{
           return null;
         }
   }
+
+
 }

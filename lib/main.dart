@@ -1,4 +1,4 @@
-import 'package:dayalog/authentications/Login.dart';
+import 'package:dayalog/pages/Login.dart';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/pages/MainPage.dart';
 import 'package:firebase_core/firebase_core.dart';

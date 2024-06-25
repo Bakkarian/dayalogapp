@@ -1,11 +1,14 @@
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:dayalog/modals/OrdersModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
 
 import '../modals/DarkThemeProvider.dart';
@@ -17,6 +20,10 @@ class mainController extends GetxController{
   var apiKey = "AIzaSyAir29_hRhb99ll83YjLarlSbj-9su5zXI";
   var ordersList = <OrdersModel>[].obs;
   var isOrdersLoading = true.obs;
+  var token;
+  var devices = [].obs;
+  var parkedDevices = 0.obs;
+  List<LatLng> stops = [];
 
   //Generate random string
   final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -30,7 +37,9 @@ class mainController extends GetxController{
   @override
   void onInit(){
     super.onInit();
+    getDevices();
   }
+
 
 //GLOBAL FUNCTIONS
   hideKeyboard(context){
@@ -105,4 +114,69 @@ class mainController extends GetxController{
     }
   }
 
+  late Timer _timer;
+  getDevices() async{
+    dataManagement().getDevices().then((results){
+      devices.clear();
+      devices.addAll(jsonDecode(results)["data"]);
+      debugPrint("$devices");
+      _timer = new Timer.periodic(const Duration(seconds: 10), (timer){
+        getDevices();
+        _timer.cancel();
+      });
+
+      parkedDevices.value=0;
+      devices.forEach((item){
+        if (item["motionstate"]==0) {
+          parkedDevices.value += 1;
+        }
+      });
+    });
+
+  }
+
+  List<Location> detectStops(List<Location> locations, {double stopDistanceThreshold = 10, int stopDurationThreshold = 30}) {
+    List<Location> stops = [];
+
+    if (locations.isEmpty) return stops;
+
+    Location? currentStopStart;
+    int stopDuration = 0;
+
+    for (int i = 1; i < locations.length; i++) {
+      double distance = Geolocator.distanceBetween(
+          locations[i-1].latitude, locations[i-1].longitude,
+          locations[i].latitude, locations[i].longitude
+      );
+
+      if (distance < stopDistanceThreshold) {
+        if (currentStopStart == null) {
+          currentStopStart = locations[i-1];
+          stopDuration = 0;
+        }
+        stopDuration += locations[i].timestamp.difference(locations[i-1].timestamp).inSeconds;
+      } else {
+        if (currentStopStart != null && stopDuration >= stopDurationThreshold) {
+          stops.add(currentStopStart);
+        }
+        currentStopStart = null;
+        stopDuration = 0;
+      }
+    }
+
+    if (currentStopStart != null && stopDuration >= stopDurationThreshold) {
+      stops.add(currentStopStart);
+    }
+
+    return stops;
+  }
+
+}
+
+class Location {
+  final double latitude;
+  final double longitude;
+  final DateTime timestamp;
+
+  Location({required this.latitude, required this.longitude, required this.timestamp});
 }

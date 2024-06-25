@@ -204,7 +204,7 @@ class _LoginState extends State<Login> {
     });
     _mainController.hideKeyboard(context);
     userManagement().login(usernameController.text, passwordController.text).then((response)async{
-      // print(response);
+      print(response);
       var data = convert.jsonDecode(response);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if(data["error"]!=null){
@@ -215,9 +215,9 @@ class _LoginState extends State<Login> {
         });
       }else{
         if(data["token"]!=null){
-          /*prefs.setString("token", data["token"]);
-        prefs.setBool("isLoggedIn", true);*/
-          var userDetails = await userManagement().getUserDetails(data["token"]);
+          prefs.setString("token", data["token"]);
+        prefs.setBool("isLoggedIn", true);
+         /* var userDetails = await userManagement().getUserDetails(data["token"]);
           var user = {
             "userDetails": convert.jsonDecode(userDetails),
             "token": "${data["token"]}",
@@ -225,7 +225,7 @@ class _LoginState extends State<Login> {
           };
 
           prefs.setString("user", convert.jsonEncode(user));
-          _mainController.userString.value = prefs.getString("user")!;
+          _mainController.userString.value = prefs.getString("user")!;*/
           // print(_mainController.userString.value);
           setState(() {
             _isLoading = false;

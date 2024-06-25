@@ -20,7 +20,7 @@ class Styles {
           onSecondary: isDarkTheme ? primaryColor : accentColor,
           error: red,
           onError: red,
-          surface: primaryColor.withOpacity(0.5),
+          surface: veryVeryLightGrey,
           onSurface: primaryColor.withOpacity(0.5),
         ),
 

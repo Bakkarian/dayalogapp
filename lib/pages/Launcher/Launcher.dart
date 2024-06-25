@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../authentications/Login.dart';
+import '../Login.dart';
 import '../../controllers/mainController.dart';
 import 'dart:convert' as convert;
 
@@ -32,9 +32,9 @@ class _LauncherState extends State<Launcher> {
   }
   checkIfLoggedIn() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var userData = prefs.getString("user");
+    var _isLoggedIn = prefs.getBool("isLoggedIn");
     // print(userData);
-      if(
+      /*if(
         userData!=null &&
         convert.jsonDecode(userData)["isLoggedIn"] !=null &&
         convert.jsonDecode(userData)["isLoggedIn"] == true
@@ -54,7 +54,12 @@ class _LauncherState extends State<Launcher> {
         });
         // Get.offAll(const MainPage());
         _mainController.initUniLinks();
-    }else{
+    }*/
+    if(_isLoggedIn!=null && _isLoggedIn){
+      _mainController.token = prefs.getString("token");
+      _mainController.initUniLinks();
+    }
+      else{
       Get.offAll(const Login());
     }
   }

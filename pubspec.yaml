@@ -4,6 +4,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
+#  sdk: ">=3.0.3 <4.0.0"
 
 
 dependencies:
@@ -13,20 +14,23 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^1.0.8
   provider: ^6.1.2
-  shared_preferences: ^2.2.2
+  shared_preferences: ^2.2.3
   get: ^4.6.6
-  google_maps_flutter: ^2.6.0
+  google_maps_flutter: ^2.7.0
   google_maps_widget: ^1.0.5+1
   http: ^1.2.1
   url_launcher: ^6.2.5
   uni_links: ^0.5.1
-  lottie: ^3.1.0
+  lottie: ^3.1.2
   custom_info_window: ^1.0.1
   qr_code_scanner: ^1.0.1
-  firebase_core: ^2.27.2
-  cloud_firestore: ^4.15.10
+  firebase_core: ^2.31.1
+  cloud_firestore: ^4.17.4
+  heroicons: ^0.10.0
+  flutter_datetime_picker_plus: ^2.2.0
+  geolocator: ^12.0.0
 
 dev_dependencies:
   flutter_test:

@@ -102,8 +102,8 @@ final ButtonStyle primaryButton = TextButton.styleFrom(
     shape: RoundedRectangleBorder(
       borderRadius: new BorderRadius.circular(15.0),
     ),
-    // disabledBackgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, context).buttonColor,
-    // disabledForegroundColor: grey,
+    disabledBackgroundColor: veryLightGrey,
+    disabledForegroundColor: grey,
     backgroundColor: Styles.themeData(_controller.themeChangeProvider.darkTheme, Get.context!).primaryColor,
     foregroundColor: white,
     textStyle: TextStyle(

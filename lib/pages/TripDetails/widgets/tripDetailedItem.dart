@@ -456,7 +456,7 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                                     "lat": 0.359010,
                                     "lng": 32.598120
                                   };
-                                  Get.to(ViewLocation(position: location,));
+                                  Get.to(ViewLocation(data: location,));
                                 },
                                 child: Text(
                                   "0.359010, 32.598120",
@@ -545,7 +545,7 @@ class _tripDetailedItemState extends State<tripDetailedItem> with TickerProvider
                     width: double.infinity,
                     child: TextButton(
                       onPressed: (){
-                        Get.to(MapTracker());
+                        Get.to(MapTracker(deviceId: 0,));
                       },
                       style: TextButton.styleFrom(
                           shape: RoundedRectangleBorder(

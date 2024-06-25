@@ -1,18 +1,20 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:dayalog/controllers/mainController.dart';
+import 'package:dayalog/services/CRUD.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_widget/google_maps_widget.dart';
 
 import '../../common/Loader.dart';
-import '../../services/mapService.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
 
 import '../../styles/styles.dart';
 
 class MapTracker extends StatefulWidget {
-  const MapTracker({Key? key}) : super(key: key);
+  var deviceId, startDate, endDate;
+  MapTracker({Key? key, required this.deviceId, this.startDate, this.endDate}) : super(key: key);
 
   @override
   State<MapTracker> createState() => _MapTrackerState();
@@ -29,6 +31,8 @@ class _MapTrackerState extends State<MapTracker> {
   late GoogleMapController mapController;
   late String _mapStyle;
   final mainController _mainController = Get.find();
+  final Set<Marker> markers = new Set();
+  List<Location> locations = [];
 
   @override
   void initState() {
@@ -38,15 +42,36 @@ class _MapTrackerState extends State<MapTracker> {
     rootBundle.loadString(_mainController.themeChangeProvider.darkTheme?'assets/map_style_dark.txt':'assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
+
+    // getCordinates();
   }
+  /*getCordinates() async{
+    var results = await dataManagement().getDeviceLocations(widget.deviceId, widget.startDate, widget.endDate);
+    debugPrint("POSITIONS::: $results");
+    setState(() {
+      loading = false;
+    });
+  }*/
   fetchPositions() async{
-    var data = await mapService().getPositionsJson(context);
-    positions.addAll(data);
-    print(positions.length);
+    // var data = await mapService().getPositionsJson(context);
+    var results = await dataManagement().getDeviceLocations(widget.deviceId, widget.startDate, widget.endDate);
+    var data = jsonDecode(results);
+    positions.addAll(data["data"]);
+    debugPrint("POSITIONS:::: ${data["data"]}");
     positions.forEach((item) {
-      polylineCoordinates.add(
-          LatLng(item["latitude"], item["longitude"])
+      locations.add(
+        Location(latitude: double.parse(item["latitude"].toString()), longitude: double.parse(item["longitude"].toString()), timestamp: DateTime.parse(item["devicetime"].toString()))
       );
+      polylineCoordinates.add(
+          LatLng(double.parse(item["latitude"].toString()), double.parse(item["longitude"].toString()))
+      );
+    });
+
+    debugPrint("LOCATIONS::: $locations");
+    debugPrint("STOPS::: ${_mainController.detectStops(locations)}");
+    var stops = _mainController.detectStops(locations);
+    stops.forEach((Location item){
+      addMarker(item.latitude,item.longitude, item.timestamp);
     });
 
     _polylines.add(
@@ -62,6 +87,32 @@ class _MapTrackerState extends State<MapTracker> {
       loading = false;
     });
     // print("POSITIONSZ:: $positions");
+  }
+
+  String imgurl = "assets/images/stop.png";
+  addMarker(lat,lng, time)async{
+    var markerIdVal = _mainController.getRandomString(10);
+    final MarkerId markerId = MarkerId(markerIdVal);
+    var showLocation = LatLng(lat, lng);
+
+    ByteData bytesDats = await rootBundle.load(imgurl);
+    Uint8List bytes = bytesDats.buffer.asUint8List();
+
+    setState(() {
+      markers.add(Marker( //add first marker
+        markerId: markerId,
+        position: showLocation, //position of marker
+        icon: BitmapDescriptor.fromBytes(bytes),
+        infoWindow: InfoWindow( //popup info
+          title: 'Stop ',
+          snippet: '$time',
+        ),
+        // icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+        onTap: (){
+          // addInfoWindow(showLocation);
+        },
+      ));
+    });
   }
 
   @override
@@ -97,6 +148,7 @@ class _MapTrackerState extends State<MapTracker> {
       GoogleMapsWidget(
         apiKey: _mainController.apiKey,
         key: mapsWidgetController,
+        // style: _mapStyle,
         onMapCreated: (GoogleMapController controller){
           mapController = controller;
           mapController.setMapStyle(_mapStyle);
@@ -106,24 +158,24 @@ class _MapTrackerState extends State<MapTracker> {
         },
         sourceLatLng: LatLng(
           positions[0]["latitude"], positions[0]["longitude"],
-      ),
+        ),
         destinationLatLng: LatLng(
           positions[positions.length-1]["latitude"], positions[positions.length-1]["longitude"],
         ),
 
-        /*sourceMarkerIconInfo: MarkerIconInfo(
+        sourceMarkerIconInfo: MarkerIconInfo(
           infoWindowTitle: "This is source name",
           onTapInfoWindow: (_) {
             print("Tapped on source info window");
           },
-          assetPath: "assets/images/house-marker-icon.png",
+          assetPath: "assets/images/car.png",
         ),
         destinationMarkerIconInfo: MarkerIconInfo(
-          assetPath: "assets/images/restaurant-marker-icon.png",
-        ),*/
+          assetPath: "assets/images/car.png",
+        ),
         driverMarkerIconInfo: MarkerIconInfo(
           infoWindowTitle: "Alex",
-          assetPath: "assets/images/truck_marker.png",
+          assetPath: "assets/images/car.png",
           onTapMarker: (currentLocation) {
             print("Driver is currently at $currentLocation");
           },
@@ -132,16 +184,17 @@ class _MapTrackerState extends State<MapTracker> {
         ),
         routeWidth: 2,
         routeColor: _mainController.themeChangeProvider.darkTheme?Colors.blueAccent:Colors.blue[800]!,
-        updatePolylinesOnDriverLocUpdate: true,
+        updatePolylinesOnDriverLocUpdate: false,
         onPolylineUpdate: (_) {
           print("Polyline updated");
         },
         zoomControlsEnabled: false,
-        trafficEnabled: false,
+        trafficEnabled: true,
         liteModeEnabled: false,
+        markers: markers,
         // mock stream
         /*driverCoordinatesStream: Stream.periodic(
-          Duration(milliseconds: 500),
+          Duration(milliseconds: 300),
               (i) => LatLng(
             positions[i]["latitude"],
             positions[i]["longitude"],
