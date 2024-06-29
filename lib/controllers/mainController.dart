@@ -15,6 +15,9 @@ import '../modals/DarkThemeProvider.dart';
 import '../services/CRUD.dart';
 import '../styles/styles.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class mainController extends GetxController{
 
   var apiKey = "AIzaSyAir29_hRhb99ll83YjLarlSbj-9su5zXI";
@@ -33,6 +36,7 @@ class mainController extends GetxController{
 
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
   var userString = "".obs;
+  var enableStops = false;
 
   @override
   void onInit(){
@@ -135,7 +139,7 @@ class mainController extends GetxController{
 
   }
 
-  List<Location> detectStops(List<Location> locations, {double stopDistanceThreshold = 10, int stopDurationThreshold = 30}) {
+  List<Location> detectStops2(List<Location> locations, {double stopDistanceThreshold = 10, int stopDurationThreshold = 10}) {
     List<Location> stops = [];
 
     if (locations.isEmpty) return stops;
@@ -170,6 +174,24 @@ class mainController extends GetxController{
 
     return stops;
   }
+  Future<List<Location>> detectStops(List<Location> locations) async {
+    final response = await http.post(
+      Uri.parse('http://dayalog.co:5500/detect_stops'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(locations.map((loc) => loc.toJson()).toList()),
+    );
+    debugPrint("STOPRES::: ${response.statusCode} - ${response.body}");
+    if (response.statusCode == 200) {
+      List<dynamic> stopsJson = jsonDecode(response.body);
+      return stopsJson.map((json) => Location(
+          latitude: json['latitude'],
+          longitude: json['longitude'],
+          timestamp: DateTime.parse(json['timestamp'])
+      )).toList();
+    } else {
+      throw Exception('Failed to detect stops');
+    }
+  }
 
 }
 
@@ -179,4 +201,9 @@ class Location {
   final DateTime timestamp;
 
   Location({required this.latitude, required this.longitude, required this.timestamp});
+  Map<String, dynamic> toJson() => {
+    'latitude': latitude,
+    'longitude': longitude,
+    'timestamp': timestamp.toIso8601String(),
+  };
 }

@@ -68,11 +68,13 @@ class _MapTrackerState extends State<MapTracker> {
     });
 
     debugPrint("LOCATIONS::: $locations");
-    debugPrint("STOPS::: ${_mainController.detectStops(locations)}");
-    var stops = _mainController.detectStops(locations);
-    stops.forEach((Location item){
-      addMarker(item.latitude,item.longitude, item.timestamp);
-    });
+    if (_mainController.enableStops) {
+      // debugPrint("STOPS::: ${_mainController.detectStops(locations)}");
+      var stops = await _mainController.detectStops(locations);
+      stops.forEach((Location item){
+        addMarker(item.latitude,item.longitude, item.timestamp);
+      });
+    }
 
     _polylines.add(
       Polyline(

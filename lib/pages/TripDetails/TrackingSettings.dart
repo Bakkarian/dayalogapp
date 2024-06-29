@@ -1,3 +1,4 @@
+import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/pages/home/MapTracker.dart';
 import 'package:dayalog/styles/colors.dart';
 import 'package:dayalog/styles/constants.dart';
@@ -15,6 +16,8 @@ class TrackingSettings extends StatefulWidget {
 
 class _TrackingSettingsState extends State<TrackingSettings> {
   var _startDate,_endDate;
+  mainController _mainController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +147,39 @@ class _TrackingSettingsState extends State<TrackingSettings> {
               ),
             ),
 
-            SizedBox(height: 60,),
+            SizedBox(height: 20,),
+
+            // SizedBox(height: 10,),
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /*Icon(
+                      Icons.stop_screen_share_outlined
+                  ),*/
+                  Text(
+                      "Show Stops"
+                  ),
+                  SizedBox(width: 5,),
+                  Switch(
+                    // This bool value toggles the switch.
+                    value: _mainController.enableStops,
+                    activeColor: Colors.green,
+                    onChanged: (bool value) {
+                      // This is called when the user toggles the switch.
+                      setState(() {
+                      _mainController.enableStops = value;
+                      });
+                    },
+                  ),
+                  Icon(
+                      Icons.location_on_rounded,
+                    color: _mainController.enableStops?green:orange,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 40,),
             SizedBox(
               height: 50,
               width: double.infinity,
