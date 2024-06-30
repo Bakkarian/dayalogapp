@@ -4,6 +4,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayalog/controllers/mainController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,6 +163,13 @@ class dataManagement{
         } else {
           return null;
         }
+  }
+
+  getAllCodes() async{
+    final codesRef = db.collection("codes");
+    QuerySnapshot querySnapshot = await codesRef.where("verified", isEqualTo: true).get();
+    _mainController.totalCodes.value = querySnapshot.docs.length;
+    debugPrint("${querySnapshot.docs.length}");
   }
 
 

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 
+import '../../services/CRUD.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -15,6 +17,15 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   mainController _mainController = Get.find();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    dataManagement().getAllCodes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +53,16 @@ class _DashboardState extends State<Dashboard> {
                     )
                 ),
                 SizedBox(width: 20,),
-                dashTile(
-                  "Codes",
-                  HeroIcons.qrCode,
-                  accentColor,
-                  "122",
-                  "active",
-                  "Truck seals",
-                    (){Get.to(QRhome());}
+                Obx(() =>
+                    dashTile(
+                        "Codes",
+                        HeroIcons.qrCode,
+                        accentColor,
+                        "${_mainController.totalCodes.value}",
+                        "active",
+                        "Truck seals",
+                            (){Get.to(QRhome());}
+                    )
                 ),
                 // dashTile(),
               ],

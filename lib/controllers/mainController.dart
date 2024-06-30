@@ -17,6 +17,7 @@ import '../styles/styles.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class mainController extends GetxController{
 
@@ -27,6 +28,7 @@ class mainController extends GetxController{
   var devices = [].obs;
   var parkedDevices = 0.obs;
   List<LatLng> stops = [];
+  var totalCodes = 0.obs;
 
   //Generate random string
   final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -56,6 +58,10 @@ class mainController extends GetxController{
   void setCurrentAppTheme() async {
     await themeChangeProvider.darkThemePreference.setDarkTheme(true);
     getCurrentAppTheme();
+  }
+  formatNumber(number){
+    var f = NumberFormat("###,###", "en_US");
+    return f.format(int.parse("$number"));
   }
 
   //GET ORDERS

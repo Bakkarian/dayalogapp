@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:dayalog/controllers/mainController.dart';
 import 'package:dayalog/pages/TripDetails/TrackingSettings.dart';
+import 'package:dayalog/pages/Trucks/TruckDetails.dart';
 import 'package:dayalog/pages/home/MapTracker.dart';
 import 'package:dayalog/styles/constants.dart';
 import 'package:flutter/material.dart';
@@ -158,7 +159,7 @@ class _ViewLocationState extends State<ViewLocation> {
                   height: 30,
                   child: OutlinedButton(
                     onPressed: (){
-                      Get.to(MapTracker(deviceId: _mainController.devices[widget.index]["id"],));
+                      Get.to(TruckDetails(data: _mainController.devices[widget.index],));
                     },
                     child: const Text('Details'),
                   ),
