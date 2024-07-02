@@ -159,7 +159,7 @@ class _ViewLocationState extends State<ViewLocation> {
                   height: 30,
                   child: OutlinedButton(
                     onPressed: (){
-                      Get.to(TruckDetails(data: _mainController.devices[widget.index],));
+                      showDetailsSheet(_mainController.devices[widget.index],);
                     },
                     child: const Text('Details'),
                   ),
@@ -324,5 +324,21 @@ class _ViewLocationState extends State<ViewLocation> {
         icon: const Icon(Icons.location_on),
       ),
     );
+  }
+
+  showDetailsSheet(data){
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder( // <-- SEE HERE
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        builder: (context) {
+          return SizedBox(
+            height: 640,
+            child: TruckDetails(data: data,),
+          );
+        });
   }
 }

@@ -40,10 +40,12 @@ class userManagement{
     return response.body;
   }
 
-  Future<String> getUserDetails(token) async{
+  Future<String> getUserDetails() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token")!;
     var response = await http.get(
 //      Uri.encodeFull("$_baseUrl/admin/user/"+id),
-      Uri.parse("$patasente_base_url/phantom-api/get-company-details"),
+      Uri.parse("$base_url/api/user"),
       headers: {
         "Accept": "application/json",
         'Content-Type': 'application/json; charset=UTF-8',

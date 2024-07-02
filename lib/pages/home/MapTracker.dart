@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:dayalog/controllers/mainController.dart';
+import 'package:dayalog/pages/Trucks/TruckDetails.dart';
 import 'package:dayalog/services/CRUD.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

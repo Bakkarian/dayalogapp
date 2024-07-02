@@ -24,7 +24,13 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
 
     dataManagement().getAllCodes();
+    getUserDetails();
   }
+
+  getUserDetails() async{
+  var user = await userManagement().getUserDetails();
+  debugPrint("USEERR::: $user");
+}
 
   @override
   Widget build(BuildContext context) {
